@@ -16,11 +16,47 @@ public class ConfigureRabbitMQ {
     public static final String FANOUT_QUEUE_3 = "pradipta.bowlerfanoutqueue3";
 
     @Bean
-    SimpleMessageListenerContainer container(ConnectionFactory connectionFactory, MessageListenerAdapter listenerAdapter){
+    SimpleMessageListenerContainer containerTopic(ConnectionFactory connectionFactory, MessageListenerAdapter listenerAdapter){
         SimpleMessageListenerContainer simpleMessageListenerContainer = new SimpleMessageListenerContainer();
         simpleMessageListenerContainer.setConnectionFactory(connectionFactory);
-        simpleMessageListenerContainer.setQueueNames(TOPIC_QUEUE, DIRECT_QUEUE, FANOUT_QUEUE_1, FANOUT_QUEUE_2, FANOUT_QUEUE_3);
+        simpleMessageListenerContainer.setQueueNames(TOPIC_QUEUE);
         simpleMessageListenerContainer.setMessageListener(listenerAdapter);
+        return simpleMessageListenerContainer;
+    }
+
+    @Bean
+    SimpleMessageListenerContainer containerDirect(ConnectionFactory connectionFactory, MessageListenerAdapter listenerAdapter){
+        SimpleMessageListenerContainer simpleMessageListenerContainer = new SimpleMessageListenerContainer();
+        simpleMessageListenerContainer.setConnectionFactory(connectionFactory);
+        simpleMessageListenerContainer.setQueueNames(DIRECT_QUEUE);
+        simpleMessageListenerContainer.setMessageListener(listenerAdapter);
+        return simpleMessageListenerContainer;
+    }
+
+    @Bean
+    SimpleMessageListenerContainer containerFan1(ConnectionFactory connectionFactory, MessageListenerAdapter listenerAdapter1){
+        SimpleMessageListenerContainer simpleMessageListenerContainer = new SimpleMessageListenerContainer();
+        simpleMessageListenerContainer.setConnectionFactory(connectionFactory);
+        simpleMessageListenerContainer.setQueueNames(FANOUT_QUEUE_1);
+        simpleMessageListenerContainer.setMessageListener(listenerAdapter1);
+        return simpleMessageListenerContainer;
+    }
+
+    @Bean
+    SimpleMessageListenerContainer containerFan2(ConnectionFactory connectionFactory, MessageListenerAdapter listenerAdapter2){
+        SimpleMessageListenerContainer simpleMessageListenerContainer = new SimpleMessageListenerContainer();
+        simpleMessageListenerContainer.setConnectionFactory(connectionFactory);
+        simpleMessageListenerContainer.setQueueNames(FANOUT_QUEUE_2);
+        simpleMessageListenerContainer.setMessageListener(listenerAdapter2);
+        return simpleMessageListenerContainer;
+    }
+
+    @Bean
+    SimpleMessageListenerContainer containerFan3(ConnectionFactory connectionFactory, MessageListenerAdapter listenerAdapter3){
+        SimpleMessageListenerContainer simpleMessageListenerContainer = new SimpleMessageListenerContainer();
+        simpleMessageListenerContainer.setConnectionFactory(connectionFactory);
+        simpleMessageListenerContainer.setQueueNames(FANOUT_QUEUE_3);
+        simpleMessageListenerContainer.setMessageListener(listenerAdapter3);
         return simpleMessageListenerContainer;
     }
 
