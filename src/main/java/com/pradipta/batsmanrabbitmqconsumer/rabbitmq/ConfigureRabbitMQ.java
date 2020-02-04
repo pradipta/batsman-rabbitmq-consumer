@@ -10,14 +10,13 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class ConfigureRabbitMQ {
     public static final String TOPIC_QUEUE = "pradipta.bowlertopicqueue";
-    public static final String TOPIC_EXCHANGE = "pradipta.bowlertopicexchange";
-    public static final String TOPIC_ROUTING_KEY = "pradipta.bowlertopickey";
+    public static final String DIRECT_QUEUE = "pradipta.bowlerdirectqueue";
 
     @Bean
     SimpleMessageListenerContainer container(ConnectionFactory connectionFactory, MessageListenerAdapter listenerAdapter){
         SimpleMessageListenerContainer simpleMessageListenerContainer = new SimpleMessageListenerContainer();
         simpleMessageListenerContainer.setConnectionFactory(connectionFactory);
-        simpleMessageListenerContainer.setQueueNames(TOPIC_QUEUE);
+        simpleMessageListenerContainer.setQueueNames(TOPIC_QUEUE, DIRECT_QUEUE);
         simpleMessageListenerContainer.setMessageListener(listenerAdapter);
         return simpleMessageListenerContainer;
     }
