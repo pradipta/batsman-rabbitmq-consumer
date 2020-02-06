@@ -1,7 +1,9 @@
 package com.pradipta.batsmanrabbitmqconsumer.rabbitmq;
 
-import com.pradipta.batsmanrabbitmqconsumer.rabbitmq.consumer.ConsumerHandler;
-import com.pradipta.batsmanrabbitmqconsumer.rabbitmq.consumer.FanoutHandler;
+import com.pradipta.batsmanrabbitmqconsumer.rabbitmq.consumer.*;
+import com.pradipta.batsmanrabbitmqconsumer.rabbitmq.consumer.implementations.FanoutHandler1;
+import com.pradipta.batsmanrabbitmqconsumer.rabbitmq.consumer.implementations.FanoutHandler2;
+import com.pradipta.batsmanrabbitmqconsumer.rabbitmq.consumer.implementations.FanoutHandler3;
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
 import org.springframework.amqp.rabbit.listener.SimpleMessageListenerContainer;
 import org.springframework.amqp.rabbit.listener.adapter.MessageListenerAdapter;
@@ -18,6 +20,7 @@ public class ConfigureRabbitMQ {
     public static final String FANOUT_QUEUE_3 = "pradipta.bowlerfanoutqueue3";
 
     @Bean
+    //@Qualifier("TopicListenerContainer")
     SimpleMessageListenerContainer containerTopic(ConnectionFactory connectionFactory, @Qualifier("Normal") MessageListenerAdapter listenerAdapter){
         SimpleMessageListenerContainer simpleMessageListenerContainer = new SimpleMessageListenerContainer();
         simpleMessageListenerContainer.setConnectionFactory(connectionFactory);
@@ -27,6 +30,7 @@ public class ConfigureRabbitMQ {
     }
 
     @Bean
+    //@Qualifier("DirectListenerContainer")
     SimpleMessageListenerContainer containerDirect(ConnectionFactory connectionFactory, @Qualifier("Normal") MessageListenerAdapter listenerAdapter){
         SimpleMessageListenerContainer simpleMessageListenerContainer = new SimpleMessageListenerContainer();
         simpleMessageListenerContainer.setConnectionFactory(connectionFactory);
@@ -36,7 +40,8 @@ public class ConfigureRabbitMQ {
     }
 
     @Bean
-    SimpleMessageListenerContainer containerFan1(ConnectionFactory connectionFactory, @Qualifier("Fanout1") MessageListenerAdapter listenerAdapter1){
+    @Qualifier("ListenerFanout1ListenerContainer")
+    SimpleMessageListenerContainer containerFan1(ConnectionFactory connectionFactory, @Qualifier("Fanout1ListenerAdapter") MessageListenerAdapter listenerAdapter1){
         SimpleMessageListenerContainer simpleMessageListenerContainer = new SimpleMessageListenerContainer();
         simpleMessageListenerContainer.setConnectionFactory(connectionFactory);
         simpleMessageListenerContainer.setQueueNames(FANOUT_QUEUE_1);
@@ -45,7 +50,8 @@ public class ConfigureRabbitMQ {
     }
 
     @Bean
-    SimpleMessageListenerContainer containerFan2(ConnectionFactory connectionFactory, @Qualifier("Fanout2") MessageListenerAdapter listenerAdapter2){
+    @Qualifier("ListenerFanout2ListenerContainer")
+    SimpleMessageListenerContainer containerFan2(ConnectionFactory connectionFactory, @Qualifier("Fanout2ListenerAdapter") MessageListenerAdapter listenerAdapter2){
         SimpleMessageListenerContainer simpleMessageListenerContainer = new SimpleMessageListenerContainer();
         simpleMessageListenerContainer.setConnectionFactory(connectionFactory);
         simpleMessageListenerContainer.setQueueNames(FANOUT_QUEUE_2);
@@ -54,7 +60,8 @@ public class ConfigureRabbitMQ {
     }
 
     @Bean
-    SimpleMessageListenerContainer containerFan3(ConnectionFactory connectionFactory, @Qualifier("Fanout3") MessageListenerAdapter listenerAdapter){
+    @Qualifier("ListenerFanout3ListenerContainer")
+    SimpleMessageListenerContainer containerFan3(ConnectionFactory connectionFactory, @Qualifier("Fanout3ListenerAdapter") MessageListenerAdapter listenerAdapter){
         SimpleMessageListenerContainer simpleMessageListenerContainer = new SimpleMessageListenerContainer();
         simpleMessageListenerContainer.setConnectionFactory(connectionFactory);
         simpleMessageListenerContainer.setQueueNames(FANOUT_QUEUE_3);
@@ -63,26 +70,26 @@ public class ConfigureRabbitMQ {
     }
 
     @Bean
-    @Qualifier("Fanout1")
-    MessageListenerAdapter listenerAdapterForFanout1(FanoutHandler handler){
-        return new MessageListenerAdapter(handler, "handleMessageForFanout1");
+    @Qualifier("Fanout1ListenerAdapter")
+    MessageListenerAdapter listenerAdapterForFanout1(FanoutHandler1 handler){
+        return new MessageListenerAdapter(handler, "handle");
     }
 
     @Bean
-    @Qualifier("Fanout2")
-    MessageListenerAdapter listenerAdapterForFanout2(FanoutHandler handler){
-        return new MessageListenerAdapter(handler, "handleMessageForFanout2");
+    @Qualifier("Fanout2ListenerAdapter")
+    MessageListenerAdapter listenerAdapterForFanout2(FanoutHandler2 handler){
+        return new MessageListenerAdapter(handler, "handle");
     }
 
     @Bean
-    @Qualifier("Fanout3")
-    MessageListenerAdapter listenerAdapterForFanout3(FanoutHandler handler){
-        return new MessageListenerAdapter(handler, "handleMessageForFanout3");
+    @Qualifier("Fanout3ListenerAdapter")
+    MessageListenerAdapter listenerAdapterForFanout3(FanoutHandler3 handler){
+        return new MessageListenerAdapter(handler, "handle");
     }
 
     @Bean
     @Qualifier("Normal")
     MessageListenerAdapter listenerAdapter(ConsumerHandler handler){
-        return new MessageListenerAdapter(handler, "handleMessage");
+        return new MessageListenerAdapter(handler, "handle");
     }
 }
