@@ -142,6 +142,7 @@ Service 2:
 2. I am assuming you will figure out how to add queue to a listener using GOOGLE SEARCH.
 3. Just print the message to the log. Together with the current queue name
 
+`docker network create batsman-mongo-rabbit-network`
 
 `docker build -f Dockerfile -t batsmanindocker .`
 
@@ -155,6 +156,7 @@ To enter Mongo CLI:
 
 ```docker run -d \
    --name="rabbitmq" \
+   --net=batsman-mongo-rabbit-network \
    -p "4369:4369" \
    -p "5671:5671" \
    -p "5672:5672" \
@@ -163,6 +165,6 @@ To enter Mongo CLI:
    rabbitmq:3-management
 ```
 
-`docker run -p 8000:8080 batsman`
+`docker run -p 8000:8080 batsmanindocker`
 
-`docker run -p 8001:8080 batsman`
+`docker run -p 8001:8080 batsmanindocker`
