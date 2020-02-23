@@ -144,19 +144,22 @@ Service 2:
 
 `docker network create batsman-mongo-rabbit-network`
 
-`docker build -f Dockerfile -t batsmanindocker .`
+`mvn clean install`
 
 Run mongo db on docker:
-`docker run -d -p 27017-27019:27017-27019 --name mongocontainer mongo:latest`
+`docker run -d -p 27017-27019:27017-27019 --net=batsman-mongo-rabbit-network --name mongocontainer mongo:latest`
+
+`docker build -f Dockerfile -t batsmanindocker .`
 
 To enter Mongo CLI:
 `docker exec -it mongocontainer bash`
 
 `docker pull rabbitmq`
 
+Run Rabbitmq if not already
 ```docker run -d \
    --name="rabbitmq" \
-   --net=batsman-mongo-rabbit-network \
+   --net=java-rabbitmq \
    -p "4369:4369" \
    -p "5671:5671" \
    -p "5672:5672" \
@@ -165,6 +168,11 @@ To enter Mongo CLI:
    rabbitmq:3-management
 ```
 
-`docker run --net=batsman-mongo-rabbit-network -p 8000:8080 batsmanindocker`
+`docker create --network batsman-mongo-rabbit-network --name batsmanindockercontainer -p 8000:10222 batsmanindocker`
+`docker create --network batsman-mongo-rabbit-network --name batsmanindockercontainer2 -p 8001:10222 batsmanindocker1`
 
-`docker run --batsman-mongo-rabbit-network -p 8001:8080 batsmanindocker`
+`docker network connect java-rabbitmq batsmanindockercontainer`
+`docker network connect java-rabbitmq batsmanindockercontainer2`
+
+`docker start batsmanindockercontainer`
+`docker start batsmanindockercontainer2`
