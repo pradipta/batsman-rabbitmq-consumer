@@ -3,7 +3,7 @@ package com.pradipta.batsmanrabbitmqconsumer;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
-@SpringBootTest
+@SpringBootTest(properties = {"spring.rabbitmq.host=localhost", "spring.data.mongodb.uri=mongodb://localhost:27017/batsman"})
 class BatsmanRabbitmqConsumerApplicationTests {
 
 	@Test
