@@ -165,6 +165,6 @@ To enter Mongo CLI:
    rabbitmq:3-management
 ```
 
-`docker run -p 8000:8080 batsmanindocker`
+`docker run --net=batsman-mongo-rabbit-network -p 8000:8080 batsmanindocker`
 
-`docker run -p 8001:8080 batsmanindocker`
+`docker run --batsman-mongo-rabbit-network -p 8001:8080 batsmanindocker`
