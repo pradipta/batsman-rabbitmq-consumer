@@ -1,7 +1,7 @@
 # batsman-rabbitmq-consumer
 
 
-Introduction:
+Problem Statement:
 Event Driven Systems are one of the modern architectural patterns for achieving scalability. Its not trivial to create a completely event driven system and also it not useful in every system you create. Events are useful in some particular kind of systems only. Micro-services is one of the use case to take advantage of Events. We are starting a series of assignments called "Event Chase". Event Chase is a series of multiple small-2 problems to make everyone learn and get better at designing event driven systems. We will get a chance to look at some patterns as well as anti patterns during the course of these assignments. 
 Technologies we are going to learn in this assignment: 
 1. Spring Boot
